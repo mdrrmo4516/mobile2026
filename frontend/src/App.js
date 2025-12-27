@@ -1,53 +1,59 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import '@/App.css';
+import { AuthProvider } from './contexts/AuthContext';
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
+import GeotagCamera from './pages/GeotagCamera';
+import HotlineNumbers from './pages/HotlineNumbers';
+import ReportIncident from './pages/ReportIncident';
+import TyphoonDashboard from './pages/TyphoonDashboard';
+import InteractiveMap from './pages/InteractiveMap';
+import GoBagChecklist from './pages/GoBagChecklist';
+import SupportResources from './pages/SupportResources';
+import EmergencyPlan from './pages/EmergencyPlan';
+import Login from './pages/Login';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminSetup from './pages/AdminSetup';
+import BottomNavBar from './components/BottomNavBar';
+import { OfflineIndicator } from './components/OfflineIndicator';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
+function AppContent() {
+  const location = useLocation();
+  
+  // Show bottom nav bar only on these main tabs (excluding camera)
+  const showBottomNav = ['/', '/dashboard', '/hotlines', '/interactive-map', '/go-bag-checklist'].includes(location.pathname);
 
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
+    <div className="App min-h-screen bg-blue-950 mx-auto" style={{ maxWidth: '430px' }}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/geotag-camera" element={<GeotagCamera />} />
+        <Route path="/hotlines" element={<HotlineNumbers />} />
+        <Route path="/report-incident" element={<ReportIncident />} />
+        <Route path="/typhoon-dashboard" element={<TyphoonDashboard />} />
+        <Route path="/interactive-map" element={<InteractiveMap />} />
+        <Route path="/go-bag-checklist" element={<GoBagChecklist />} />
+        <Route path="/support-resources" element={<SupportResources />} />
+        <Route path="/emergency-plan" element={<EmergencyPlan />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/setup" element={<AdminSetup />} />
+      </Routes>
+      
+      {showBottomNav && <BottomNavBar />}
+      <OfflineIndicator />
     </div>
   );
-};
+}
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

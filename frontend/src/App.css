@@ -1,34 +1,114 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+.App {
+  min-height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+/* Module card hover effects */
+.module-card {
+  transition: all 0.2s ease;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.module-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-.App-link {
-    color: #61dafb;
+.module-card:active {
+  transform: translateY(-2px);
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Header styles */
+.header-gradient {
+  background: linear-gradient(180deg, #172554 0%, #1e3a5f 100%);
+}
+
+/* Card styles */
+.card-yellow-border {
+  border: 3px solid #eab308;
+}
+
+/* Button animations */
+.btn-primary {
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.02);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Checklist item styles */
+.checklist-item {
+  transition: all 0.2s ease;
+}
+
+.checklist-item:hover {
+  background-color: rgba(234, 179, 8, 0.1);
+}
+
+/* Form input focus styles */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #eab308;
+}
+
+/* Map container */
+.map-container {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #eab308;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure map tiles render cleanly */
+.map-container .leaflet-tile-container {
+  pointer-events: auto;
+}
+
+.map-container .leaflet-tile {
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Typhoon tracking card */
+.typhoon-info-card {
+  background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
+}
+
+/* Emergency call button */
+.emergency-btn {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(220, 38, 38, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.8);
+  }
+}
+
+/* Satellite image container */
+.satellite-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.satellite-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid rgba(234, 179, 8, 0.3);
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 10;
 }

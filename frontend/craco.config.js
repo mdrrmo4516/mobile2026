@@ -61,6 +61,18 @@ const webpackConfig = {
         ],
       };
 
+      // Exclude service worker from webpack processing
+      webpackConfig.module.rules.push({
+        test: /service-worker\.js$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        ],
+      });
       // Add health check plugin to webpack if enabled
       if (config.enableHealthCheck && healthPluginInstance) {
         webpackConfig.plugins.push(healthPluginInstance);
